@@ -2,7 +2,6 @@
  * 
  */
 package mousegame;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -12,7 +11,7 @@ import java.awt.event.*;
  * @author TaylorJenkins
  * @version 0.0.0
  */
-public class CheesyPete extends JPanel{
+public class CheesyPete extends JPanel implements ActionListener,KeyListener{
 
 	/**
 	 * Global Variables
@@ -67,22 +66,22 @@ public class CheesyPete extends JPanel{
 		setDoubleBuffered(true);
 		
 		//Images for the panel
-		ImageIcon ii = new ImageIcon("C:\\Users\\Taylor\\Documents\\GitHub\\mousegame\\src\\images\\bkgrnd.png");
+		ImageIcon ii = new ImageIcon("C:\\Users\\Taylor\\Documents\\VideoGame\\mousegame\\src\\images\\bkgrnd.png");
 		bkgrnd = ii.getImage();
-		ImageIcon ii2 = new ImageIcon("C:\\Users\\Taylor\\Documents\\GitHub\\mousegame\\src\\images\\mouse.png");
+		ImageIcon ii2 = new ImageIcon("C:\\Users\\Taylor\\Documents\\VideoGame\\mousegame\\src\\images\\mouse.png");
 		mouse = ii2.getImage();
-		ImageIcon ii3 = new ImageIcon("C:\\Users\\Taylor\\Documents\\GitHub\\mousegame\\src\\images\\mouseAlt.png");
+		ImageIcon ii3 = new ImageIcon("C:\\Users\\Taylor\\Documents\\VideoGame\\mousegame\\src\\images\\mouseAlt.png");
 		mouseAlt = ii3.getImage();
-		ImageIcon ii4 = new ImageIcon("C:\\Users\\Taylor\\Documents\\GitHub\\mousegame\\src\\images\\cat.png");
+		ImageIcon ii4 = new ImageIcon("C:\\Users\\Taylor\\Documents\\VideoGame\\mousegame\\src\\images\\cat.png");
 		catIm = ii4.getImage();
-		ImageIcon ii5 = new ImageIcon("C:\\Users\\Taylor\\Documents\\GitHub\\mousegame\\src\\images\\plank.png");
+		ImageIcon ii5 = new ImageIcon("C:\\Users\\Taylor\\Documents\\VideoGame\\mousegame\\src\\images\\plank.png");
 		plankIm = ii5.getImage();
-		ImageIcon ii6 = new ImageIcon("C:\\Users\\Taylor\\Documents\\GitHub\\mousegame\\src\\images\\largeCheese.png");
+		ImageIcon ii6 = new ImageIcon("C:\\Users\\Taylor\\Documents\\VideoGame\\mousegame\\src\\images\\largeCheese.png");
 		largeCheeseIm = ii6.getImage();
-		ImageIcon ii7 = new ImageIcon("C:\\Users\\Taylor\\Documents\\GitHub\\mousegame\\src\\images\\smallCheese.png");
+		ImageIcon ii7 = new ImageIcon("C:\\Users\\Taylor\\Documents\\VideoGames\\mousegame\\src\\images\\smallCheese.png");
 		smallCheeseIm = ii7.getImage();
-		timerEv = new Timer(25, new TimerClass());
-		timerEv.start();
+		this.addKeyListener(this);
+		new javax.swing.Timer(25, this).start();
 	}
 	
 	@Override
@@ -93,8 +92,13 @@ public class CheesyPete extends JPanel{
 	
 	private void drawScreen(Graphics g){
 		g.drawImage(bkgrnd,0,0,this);
-		g.drawImage(largeCheeseIm, 300,200, this);
-		g.drawImage(smallCheeseIm, 100, 200, this);
+		//g.drawImage(largeCheeseIm, 300,200, this);
+		//g.drawImage(largeCheeseIm, 300,300, this);
+		//g.drawImage(smallCheeseIm, 100, 200, this);
+		g.drawImage(plankIm, 500, 460, this);
+		g.drawImage(plankIm, 150, 200, this);
+		g.drawImage(plankIm, 75, 150, this);
+		g.drawImage(plankIm, 50, 400, this);
 		
 		if (usingAlt > 0){
 			g.drawImage(mouse, cx, cy, this);
@@ -105,42 +109,60 @@ public class CheesyPete extends JPanel{
 	}
 	
 	public void eventFrame(){
-		//Insert Code to move characters
+		if(this.getGraphics() != null)
+			paintComponent(this.getGraphics());
 	}
 	
 	//Key Pressed Event
-	public void keyPressedEvent(KeyEvent e){
+	@Override
+	public void keyPressed(KeyEvent e){
 		int cd = e.getKeyCode();
-		char cdc = e.getKeyChar();
+			
 		if(cd== KeyEvent.VK_LEFT)
-			leftArrow=1;
+			cx -= 10;
 		if(cd== KeyEvent.VK_RIGHT)
-			rightArrow=1;
-		if(cdc== KeyEvent.VK_UP)
-			jump=1;
-		if(cdc== KeyEvent.VK_DOWN)
-			push=1;
+			cx += 10;
+		if(cd== KeyEvent.VK_UP){
+			for(int i = 0; i < 10; i++){
+				cy -= 10;
+			}
+		}
+			
+		if(cd== KeyEvent.VK_DOWN)
+			cy += 10;
 	}
 	
 	//Key Released Event
-	public void keyReleasedEvent(KeyEvent e){
+	@Override
+	public void keyReleased(KeyEvent e){	
 		int cd = e.getKeyCode();
-		char cdc = e.getKeyChar();
+		
 		if(cd== KeyEvent.VK_LEFT)
 			leftArrow=0;
 		if(cd== KeyEvent.VK_RIGHT)
 			rightArrow=0;
-		if(cdc== KeyEvent.VK_UP)
+		if(cd== KeyEvent.VK_UP)
 			jump=0;
-		if(cdc== KeyEvent.VK_DOWN)
+		if(cd== KeyEvent.VK_DOWN)
 			push=0;
 	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		eventFrame();
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+	}
 	
-	class TimerClass implements ActionListener{
+	/*class TimerClass implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e){
 			eventFrame();
 		}
-	}
+	}*/
 
 }
